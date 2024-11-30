@@ -1,26 +1,37 @@
 // require('dotenv').config({path: './env'}) //but it breaks consistency
 import dotenv from "dotenv"
-
-
+import {app} from './app.js'
 import connectDB from "./db/index.js";
 
 dotenv.config({path : './env'})
 
 
 
-connectDB()   // we are doing try-catch as the connectdb(async -await) return promise
+connectDB()
 .then(() => {
-    app.listen( process.env.PORT || 8000 ,() => {
-        `Express Server si running at ${process.env.PORT}`
-    })
-    app.on("error" , (error) =>{
-        console.log("ERRR : " ,error);
-        throw error
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
     })
 })
 .catch((err) => {
-    console.log("MongoDB Connection Failed ERROR :" ,err);
+    console.log("MONGO db connection failed !!! ", err);
 })
+
+// we are doing try-catch as the connectdb(async -await) return promise
+
+// connectDB()   
+// .then(() => {
+//     app.listen(  8000 ,() => {
+//         `Express Server is running at ${process.env.PORT}`
+//     })
+//     // app.on("error" , (error) =>{
+//     //     console.log("ERRR : " ,error);
+//     //     throw error
+//     // })
+// })
+// .catch((err) => {
+//     console.log("MongoDB Connection Failed ERROR :" ,err);
+// })
 
 
  

@@ -53,8 +53,8 @@ import bcrypt from "bcrypt"
 )
 
 userSchema.pre("save" , async function(next) {
-    if( !this.isModified("password") ) return next()
-    this.password = bcrypt.hash(this.password, 10)
+    if( !this.isModified("password") ) return next()  // isModified for checking if password is really changed in the specific change
+    this.password =  await bcrypt.hash(this.password, 10)
     next()
 })
 
