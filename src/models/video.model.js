@@ -7,6 +7,10 @@ const videoSchema = new Schema(
             type: String,
             required: true
         },
+        cloudinaryId:{
+            type: String,
+            required: true
+        },
         thumbnail:{
             type:String,
             required: true
@@ -20,7 +24,7 @@ const videoSchema = new Schema(
             required: true
         },
         duration:{
-            type: Nummber,
+            type: Number,
             required : true
         },
         views:{
@@ -29,11 +33,15 @@ const videoSchema = new Schema(
         },
         isPublished:{
             type : Boolean,
-            default :trusted
+            default: false
         },
         owner:{
             type : Schema.Types.ObjectId,
             ref: "User"
+        },
+        likesCount: {
+            type: Number,
+            default: 0
         }
     },
     {

@@ -4,7 +4,7 @@ import {User} from "../models/user.model.js";
 import {uploadOnCloudinary, deleteFromCloudinary} from "../utils/cloudinary.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-import mongoose, { mongo } from "mongoose";
+
 
 const generateAccessAndRefreshTokens  = async(userId)=> 
     {
@@ -40,7 +40,7 @@ const registerUser = asynchandler( async (req,res) => {
     if (existedUser){
         throw new ApiError(409 ,"User with this email or username already exists" )
     }
-
+    
     console.log("req.files" , req.files)
     const avatarLocalPath = req.files?.avatar?.[0]?.path;
     let coverImageLocalPath;
@@ -49,7 +49,6 @@ const registerUser = asynchandler( async (req,res) => {
         coverImageLocalPath = req.files.coverImage[0].path;
     }
     
-
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required")
     }
@@ -57,7 +56,7 @@ const registerUser = asynchandler( async (req,res) => {
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     console.log(avatar,coverImage)
-    if (!avatar){
+    if (!avatar && !coverImage) { 
         throw new ApiError(400,"Avatar file is required")
     }
 
